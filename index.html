@@ -1,0 +1,155 @@
+<!--
+    Name: Mohammed Abdul Quawi Mudassir
+    ID: C0911573
+    Assignment 7-8
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Game</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+.dice-container {
+    display: flex;
+    justify-content: center;
+}
+
+.player {
+    margin: 0 20px;
+}
+
+.dice {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#restartBtn {
+    background-color: #dc3545;
+    margin-left: 10px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Dice Game</h1>
+        <div class="dice-container">
+            <div class="player">
+                <h2>Player 1</h2>
+                <img id="dice1" class="dice" src="dice1.png" alt="Dice 1">
+                <p>Score: <span id="score1">0</span></p>
+            </div>
+            <div class="player">
+                <h2>Player 2</h2>
+                <img id="dice2" class="dice" src="dice1.png" alt="Dice 1">
+                <p>Score: <span id="score2">0</span></p>
+            </div>
+        </div>
+        <button id="rollBtn">Roll Dice</button>
+        <button id="restartBtn">Restart</button>
+    </div>
+
+    <script>
+
+        // Function to generate a random number between 1 and 6 (inclusive)
+function rollDice() {
+    return Math.floor(Math.random() * 6) + 1;
+}
+
+// Function to update the dice image and score for a player
+function updatePlayer(player, diceValue, score) {
+    const diceImage = document.getElementById(`dice${player}`);
+    const scoreElement = document.getElementById(`score${player}`);
+    diceImage.src = `dice${diceValue}.png`;
+    scoreElement.textContent = score;
+}
+
+// Function to check if a player has won
+function checkWinner(score) {
+    return score >= 20;
+}
+
+// Function to reset the game
+function resetGame() {
+    score1 = 0;
+    score2 = 0;
+    updatePlayer(1, 1, 0);
+    updatePlayer(2, 1, 0);
+}
+
+// Initialize scores
+let score1 = 0;
+let score2 = 0;
+
+// Add event listener to roll button
+document.getElementById('rollBtn').addEventListener('click', function() {
+    // Roll dice for player 1 and update
+    const dice1Value = rollDice();
+    score1 += dice1Value;
+    updatePlayer(1, dice1Value, score1);
+
+    // Roll dice for player 2 and update
+    const dice2Value = rollDice();
+    score2 += dice2Value;
+    updatePlayer(2, dice2Value, score2);
+
+    // Check for winner
+    if (checkWinner(score1)) {
+        alert('Player 1 wins!');
+        resetGame();
+    } else if (checkWinner(score2)) {
+        alert('Player 2 wins!');
+        resetGame();
+    }
+});
+
+// Add event listener to restart button
+document.getElementById('restartBtn').addEventListener('click', function() {
+    resetGame();
+});
+
+
+
+
+    </script>
+</body>
+</html>
